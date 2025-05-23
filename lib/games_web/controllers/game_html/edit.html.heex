@@ -1,0 +1,29 @@
+<.header>
+  Edit Game {@game.name}
+  <:subtitle>Use this form to manage game records in your database.</:subtitle>
+</.header>
+
+<.game_form changeset={@changeset} action={~p"/admin/games/#{@game}"} />
+
+
+<h3>
+  Puzzles
+</h3>
+
+
+<.table id="puzzles" rows={@game.puzzles}>
+  <:col :let={puzzle} label="ID">{puzzle.id}</:col>
+  <:col :let={puzzle} label="date">{puzzle.date}</:col>
+  <:col :let={puzzle} label="Data">{puzzle.data}</:col>
+</.table>
+
+
+<.header>
+  <:actions>
+    <.link href={~p"/admin/games/#{@game}/puzzles/new"}>
+      <.button>New Puzzle</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.back navigate={~p"/admin/games"}>Back to games</.back>

@@ -1,12 +1,65 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between py-3 text-sm border-b border-zinc-100">
-    <div class="flex items-center gap-4">
+<header class="flex items-center justify-between px-4 border sm:px-6 lg:px-8">
+  
+      <div>
       <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
+        <img src={~p"/images/logo.png"} width="150" />
       </a>
     </div>
-  </div>
+    
+   <ul class="relative z-10 flex gap-4 px-4 sm:px-6 lg:px-8">
+   
+      <%= if @current_user do %>
+        <li class="text-[0.8125rem] leading-6 text-zinc-900">
+          {@current_user.name}
+          |
+        </li>
+        <li>
+          <.link
+            href={~p"/users/settings"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Settings
+          |
+          </.link>
+          <.link
+            href={~p"/admin"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Admin
+          </.link>
+          |
+        </li>
+        <li>
+          <.link
+            href={~p"/users/log_out"}
+            method="delete"
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Log out
+          </.link>
+        </li>
+      <% else %>
+        <li>
+          <.link
+            href={~p"/users/register"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Register
+          </.link>
+        </li>
+        <li>
+          <.link
+            href={~p"/users/log_in"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Log in
+          </.link>
+        </li>
+      <% end %>
+    </ul>
 </header>
+
+   
 <main class="px-4 py-20 sm:px-6 lg:px-8">
   <div class="max-w-2xl mx-auto">
     <.flash_group flash={@flash} />

@@ -1,0 +1,11 @@
+<.header  class="p-5">
+  Today's {@game.name}
+  - 
+  {@today}
+</.header>
+
+
+ <link phx-track-static rel="stylesheet" href={~p"/assets/" <> @game.slug <> ".css"} />
+ <script defer phx-track-static type="text/javascript" src={~p"/assets/" <> @game.slug <> ".js"}></script>
+
+ <div id="app"></div>

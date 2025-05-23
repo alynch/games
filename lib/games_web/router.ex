@@ -21,6 +21,21 @@ defmodule GamesWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+
+    resources "/games", GameController
+
+  end
+
+
+  scope "/admin", GamesWeb.Admin do
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/", PageController, :home
+
+    resources "/games", GameController
+    #resources "/games/:id/puzzles", PuzzleController
+    get "/games/:game_id/puzzles/new", PuzzleController, :new
   end
 
   # Other scopes may use custom stacks.
