@@ -1,0 +1,34 @@
+<.header>
+   <img src={~p"/images/logo-" <> @game.slug <> ".svg"} width="36" />
+  {@game.name}
+
+  <:actions>
+    <.link href={~p"/games/#{@game}/edit"}>
+      <.button>Edit game</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name">{@game.name}</:item>
+  <:item title="Slug">{@game.slug}</:item>
+</.list>
+
+
+<.header>
+  Puzzles
+
+<.table id="puzzles" rows={@game.puzzles}>
+  <:col :let={puzzle} label="Name">{puzzle.name}</:col>
+  <:col :let={puzzle} label="Date">{puzzle.date}</:col>
+  <:col :let={puzzle} label="Data">{puzzle.data}</:col>
+</.table>
+
+  <:actions>
+    <.link href={~p"/games/#{@game}/puzzles/new"}>
+      <.button>Add puzzle</.button>
+    </.link>
+  </:actions>
+ </.header>
+
+<.back navigate={~p"/games"}>Back to games</.back>
