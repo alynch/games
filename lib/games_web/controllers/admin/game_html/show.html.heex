@@ -3,7 +3,7 @@
   {@game.name}
 
   <:actions>
-    <.link href={~p"/games/#{@game}/edit"}>
+    <.link href={~p"/admin/games/#{@game}/edit"}>
       <.button>Edit game</.button>
     </.link>
   </:actions>
@@ -25,10 +25,10 @@
 </.table>
 
   <:actions>
-    <.link href={~p"/games/#{@game}/puzzles/new"}>
+    <.link href={~p"/admin/games/#{@game}/puzzles/new"}>
       <.button>Add puzzle</.button>
     </.link>
   </:actions>
  </.header>
 
-<.back navigate={~p"/games"}>Back to games</.back>
+<.back navigate={~p"/admin/games"}>Back to games</.back>

@@ -1,65 +1,51 @@
 defmodule GamesWeb.GameController do
   use GamesWeb, :controller
 
+  import Ecto.Query
+
   alias Games.Admin
   alias Games.Admin.Game
 
-  def index(conn, _params) do
-    games = Admin.list_games()
-    render(conn, :index, games: games)
-  end
+  def show(conn, %{"id" => id, "date" => date}) do
 
-  def new(conn, _params) do
-    changeset = Admin.change_game(%Game{})
-    render(conn, :new, changeset: changeset)
-  end
+    today = Calendar.strftime(Date.from_iso8601!(date), "%Y-%m-%d")
 
-  def create(conn, %{"game" => game_params}) do
-    case Admin.create_game(game_params) do
-      {:ok, game} ->
-        conn
-        |> put_flash(:info, "Game created successfully.")
-        |> redirect(to: ~p"/games/#{game}")
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+    case get_game_and_one_puzzle_by_game_slug_and_puzzle_date(id, today) do
+      {game, nil} ->
+          render(conn, :nopuzzle, game: game, today: today)
+      {game, puzzle} ->
+          render(conn, :show, game: game, puzzle: puzzle, today: today)
+      nil ->
+          render(conn, :nogame)
     end
   end
 
   def show(conn, %{"id" => id}) do
 
-    game = Admin.get_game_by!(id)
-    today = Calendar.strftime(Date.utc_today, "%B %d, %Y")
+    today = Calendar.strftime(Date.utc_today, "%Y-%m-%d")
 
-    render(conn, :show, game: game, today: today)
-  end
 
-  def edit(conn, %{"id" => id}) do
-    game = Admin.get_game!(id)
-    changeset = Admin.change_game(game)
-    render(conn, :edit, game: game, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "game" => game_params}) do
-    game = Admin.get_game!(id)
-
-    case Admin.update_game(game, game_params) do
-      {:ok, game} ->
-        conn
-        |> put_flash(:info, "Game updated successfully.")
-        |> redirect(to: ~p"/games/#{game}")
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :edit, game: game, changeset: changeset)
+    case get_game_and_one_puzzle_by_game_slug_and_puzzle_date(id, today) do
+      {game, nil} ->
+          render(conn, :nopuzzle, game: game, today: today)
+      {game, puzzle} ->
+          render(conn, :show, game: game, puzzle: puzzle, today: today)
+      nil ->
+          render(conn, :nogame)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    game = Admin.get_game!(id)
-    {:ok, _game} = Admin.delete_game(game)
-
-    conn
-    |> put_flash(:info, "Game deleted successfully.")
-    |> redirect(to: ~p"/games")
+  def get_game_and_one_puzzle_by_game_slug_and_puzzle_date(slug, date) do
+    from(g in Game,
+      where: g.slug == ^slug,
+      left_join: p in assoc(g, :puzzles),
+      on: p.date == ^date,
+      order_by: [asc: p.inserted_at],
+      limit: 1,
+      select: {g, p}
+    )
+    |> Games.Repo.one()
+    |> IO.inspect
   end
+
 end

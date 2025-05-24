@@ -22,21 +22,24 @@ defmodule GamesWeb.Router do
 
     get "/", PageController, :home
 
-
-    resources "/games", GameController
-
+    get "/games/:id/:date", GameController, :show
+    get "/games/:id", GameController, :show
   end
-
 
   scope "/admin", GamesWeb.Admin do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/", PageController, :home
 
-    resources "/games", GameController
-    #resources "/games/:id/puzzles", PuzzleController
-    get "/games/:game_id/puzzles/new", PuzzleController, :new
+    get "/users", UserController, :index
+
+    # Nested resources for games and puzzles
+    resources "/games", GameController do
+      resources "/puzzles", PuzzleController
+    end
   end
+
+
 
   # Other scopes may use custom stacks.
   # scope "/api", GamesWeb do

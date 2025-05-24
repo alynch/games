@@ -150,12 +150,22 @@ defmodule Games.Admin do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_puzzle(attrs \\ %{}) do
+
+  #def create_puzzle(attrs \\ %{}) do
+  #  %Puzzle{}
+  #  |> Puzzle.changeset(attrs)
+  #  |>IO.inspect(label: "Save puzzle")
+  #  |> Repo.insert()
+  #end
+
+  def create_puzzle(game, attrs) do
+    attrs = Map.put(attrs, "game_id", game.id)
+
     %Puzzle{}
     |> Puzzle.changeset(attrs)
-    |>IO.inspect(label: "Save puzzle")
     |> Repo.insert()
   end
+
 
 
    @doc """

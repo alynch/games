@@ -7,8 +7,12 @@
   </:actions>
 </.header>
 
-<.table id="games" rows={@games} row_click={&JS.navigate(~p"/admin/games/#{&1}")}>
-  <:col :let={game} label="Name">{game.name}</:col>
+<.table id="games" rows={@games}>
+  <:col :let={game} label="Name">
+    <a href={~p"/admin/games/#{game.slug}"}>
+    {game.name}
+    </a>
+  </:col>
   <:col :let={game} label="Slug">{game.slug}</:col>
   <:action :let={game}>
     <div class="sr-only">

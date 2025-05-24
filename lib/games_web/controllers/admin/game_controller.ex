@@ -6,7 +6,6 @@ defmodule GamesWeb.Admin.GameController do
 
   def index(conn, _params) do
     games = Admin.list_games()
-    |> IO.inspect
     render(conn, :index, games: games)
   end
 
@@ -17,7 +16,7 @@ defmodule GamesWeb.Admin.GameController do
 
   def create(conn, %{"game" => game_params}) do
     case Admin.create_game(game_params) do
-      {:ok, game} ->
+      {:ok, _game} ->
         conn
         |> put_flash(:info, "Game created successfully.")
         |> redirect(to: ~p"/admin/games/")
@@ -30,7 +29,6 @@ defmodule GamesWeb.Admin.GameController do
   def show(conn, %{"id" => id}) do
 
     game = Admin.get_game_by!(id)
-    |> IO.inspect(label: "Game with puzzles")
     render(conn, :show, game: game)
   end
 
@@ -44,7 +42,7 @@ defmodule GamesWeb.Admin.GameController do
     game = Admin.get_game!(id)
 
     case Admin.update_game(game, game_params) do
-      {:ok, game} ->
+      {:ok, _game} ->
         conn
         |> put_flash(:info, "Game updated successfully.")
         |> redirect(to: ~p"/admin/games/")

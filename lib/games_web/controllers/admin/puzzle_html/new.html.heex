@@ -1,12 +1,11 @@
 <.header>
-  New Puzzle!!
-  <:subtitle>Use this form to manage game records in your database.</:subtitle>
+  New Puzzle for game {@changeset.changes.game_id}
+
+  <:subtitle>Add a new puzzle for this game.</:subtitle>
 </.header>
 
 
-<.puzzle_form changeset={@changeset} action={~p"/admin/games"} />
+<.puzzle_form changeset={@changeset} action={~p"/admin/games/#{@changeset.changes.game_id}/puzzles"} />
 
-
-{@changeset.game_id}
 
 <.back navigate={~p"/admin/games/"}>Back to games</.back>

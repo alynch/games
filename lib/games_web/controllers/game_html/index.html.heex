@@ -17,7 +17,7 @@
     <.link navigate={~p"/admin/games/#{game}/edit"}>Edit</.link>
   </:action>
   <:action :let={game}>
-    <.link href={~p"/admin/games/#{game}"} method="delete" data-confirm="Are you sure?">
+    <.link href={~p"/admin/games/#{game.slug}"} method="delete" data-confirm="Are you sure?">
       Delete
     </.link>
   </:action>
