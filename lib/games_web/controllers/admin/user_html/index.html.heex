@@ -1,0 +1,8 @@
+<.header>
+  Users
+</.header>
+
+<.table id="users" rows={@users}>
+  <:col :let={user} label="Name">{user.name}</:col>
+  <:col :let={user} label="Email">{user.email}</:col>
+</.table>
