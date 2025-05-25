@@ -18,7 +18,7 @@
     <div class="sr-only">
       <.link navigate={~p"/admin/games/#{game}"}>Show</.link>
     </div>
-    <.link navigate={~p"/admin/games/#{game}/edit"}>Edit</.link>
+    <.link navigate={~p"/admin/games/#{game.slug}/edit"}>Edit</.link>
   </:action>
   <:action :let={game}>
     <.link href={~p"/admin/games/#{game}"} method="delete" data-confirm="Are you sure?">
