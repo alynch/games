@@ -22,6 +22,7 @@ defmodule GamesWeb.Router do
 
     get "/", PageController, :home
 
+    get "/games/:id/archive", GameController, :archive
     get "/games/:id/:date", GameController, :show
     get "/games/:id", GameController, :show
   end

@@ -6,6 +6,12 @@ defmodule GamesWeb.GameController do
   alias Games.Admin
   alias Games.Admin.Game
 
+  def archive(conn, %{"id" => id}) do
+    game = Admin.get_game_by!(id)
+    |> IO.inspect
+    render(conn, :archive, game: game)
+  end
+
   def show(conn, %{"id" => id, "date" => date}) do
 
     today = Calendar.strftime(Date.from_iso8601!(date), "%Y-%m-%d")
