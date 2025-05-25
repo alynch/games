@@ -33,7 +33,7 @@ defmodule GamesWeb.Admin.GameController do
   end
 
   def edit(conn, %{"id" => id}) do
-    game = Admin.get_game!(id)
+    game = Admin.get_game_by!(id)
     changeset = Admin.change_game(game)
     render(conn, :edit, game: game, changeset: changeset)
   end
