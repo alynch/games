@@ -3,14 +3,25 @@
   - 
   {@today}
 
- <:subtitle>
-  Name: {@puzzle.name}
- </:subtitle>
-
 </.header>
 
+ <p>
+  Name: {@puzzle.name}
+ </p>
 
+ <p>
+  Data: {@puzzle.data}
+ </p>
+ 
+
+
+<iframe class="py-4 border" src={"https://hugolynch.github.io/#{@game.slug}"} width="100%" height="800"></iframe>
+
+
+<!--
  <link phx-track-static rel="stylesheet" href={~p"/assets/" <> @game.slug <> ".css"} />
  <script defer phx-track-static type="text/javascript" src={~p"/assets/" <> @game.slug <> ".js"}></script>
-
+ 
  <div id="app"></div>
+
+-->
