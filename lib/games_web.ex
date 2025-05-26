@@ -55,6 +55,9 @@ defmodule GamesWeb do
       use Phoenix.LiveView,
         layout: {GamesWeb.Layouts, :app}
 
+      # Integrate with Svelte
+      import LiveSvelte
+
       unquote(html_helpers())
     end
   end

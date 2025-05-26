@@ -25,7 +25,8 @@ config :games, GamesWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "y03HBsQqvDKDaF5l8Et+WvK421xAYZfMbip/BG9uh9jsSan+7XwrBhbts7f8Uwxv",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:games, ~w(--sourcemap=inline --watch)]},
+    node: ["build.js", "--watch", cd: Path.expand("../assets", __DIR__)],
+    # esbuild: {Esbuild, :install_and_run, [:games, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:games, ~w(--watch)]}
   ]
 
