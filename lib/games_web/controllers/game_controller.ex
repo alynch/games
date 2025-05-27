@@ -27,7 +27,7 @@ defmodule GamesWeb.GameController do
   end
 
 
-  def show(conn, %{"id" => id} = params) do
+  def show(conn, params) do
     #today = Calendar.strftime(Date.utc_today, "%Y-%m-%d")
     today = Date.utc_today() |> Date.to_iso8601()
     show(conn, Map.put(params, "date", today))

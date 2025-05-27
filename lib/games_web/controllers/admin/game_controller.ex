@@ -58,6 +58,6 @@ defmodule GamesWeb.Admin.GameController do
 
     conn
     |> put_flash(:info, "Game deleted successfully.")
-    |> redirect(to: ~p"/games")
+    |> redirect(to: ~p"/admin/games")
   end
 end

@@ -2,7 +2,6 @@ defmodule GamesWeb.Admin.PuzzleController do
   use GamesWeb, :controller
 
   alias Games.Admin
-  alias Games.Admin.Game
   alias Games.Admin.Puzzle
 
   def new(conn, params) do
