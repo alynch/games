@@ -14,5 +14,5 @@
 
 <p>The number is {game.puzzle_data.n}</p>
 
-<button onclick={increase}>+</button>
-<button onclick={decrease}>-</button>
+<button class="px-4 border" onclick={increase}>+</button>
+<button class="px-4 border" onclick={decrease}>-</button>
