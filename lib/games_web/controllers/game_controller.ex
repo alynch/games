@@ -16,7 +16,7 @@ defmodule GamesWeb.GameController do
 
     today = Calendar.strftime(Date.from_iso8601!(date), "%Y-%m-%d")
 
-    case get_game_and_one_puzzle_by_game_slug_and_puzzle_date(id, today) do
+    case get_game_and_puzzle(id, today) do
       {game, nil} ->
           render(conn, :nopuzzle, game: game, today: today)
       {game, puzzle} ->
@@ -26,22 +26,14 @@ defmodule GamesWeb.GameController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
 
-    today = Calendar.strftime(Date.utc_today, "%Y-%m-%d")
-
-
-    case get_game_and_one_puzzle_by_game_slug_and_puzzle_date(id, today) do
-      {game, nil} ->
-          render(conn, :nopuzzle, game: game, today: today)
-      {game, puzzle} ->
-          render(conn, :show, game: game, puzzle: puzzle, today: today)
-      nil ->
-          render(conn, :nogame)
-    end
+  def show(conn, %{"id" => id} = params) do
+    #today = Calendar.strftime(Date.utc_today, "%Y-%m-%d")
+    today = Date.utc_today() |> Date.to_iso8601()
+    show(conn, Map.put(params, "date", today))
   end
 
-  def get_game_and_one_puzzle_by_game_slug_and_puzzle_date(slug, date) do
+  def get_game_and_puzzle(slug, date) do
     from(g in Game,
       where: g.slug == ^slug,
       left_join: p in assoc(g, :puzzles),
@@ -51,7 +43,6 @@ defmodule GamesWeb.GameController do
       select: {g, p}
     )
     |> Games.Repo.one()
-    |> IO.inspect
   end
 
 end
