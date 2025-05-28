@@ -81,7 +81,11 @@ defmodule Games.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind games"],
+      "assets.build": [
+        "tailwind games",
+        "cmd --cd assets node build.js",
+      ],
+      "assets.watch": ["cmd --cd assets node build.js --watch"],
       "assets.deploy": [
         "tailwind games --minify",
         "cmd --cd assets node build.js --deploy",

@@ -7,8 +7,21 @@ defmodule GamesWeb.GameLive do
   alias Games.Admin.Puzzle
 
   def render(assigns) do
+    component = assigns.game.slug
+      |> String.split("_")
+      |> Enum.map(&String.capitalize/1)
+      |> Enum.join()
     ~H"""
-      <LiveSvelte.svelte name="Simple" props={%{game: @game}} />
+      <div class="mb-4">
+        <h1>{assigns.game.name}</h1>
+        <b>{assigns.game.title}</b><br/>
+        <i>{assigns.game.date}</i>
+      </div>
+      <%= if @game.data != nil do %>
+        <LiveSvelte.svelte name={component} props={%{game: @game.data}} />
+      <% else %>
+        no puzzle today :(
+      <% end %>
     """
   end
 
@@ -18,10 +31,11 @@ defmodule GamesWeb.GameLive do
         left_join: p in Puzzle, on: (g.id == p.game_id and p.date == ^date),
         where: g.slug == ^id,
         select: %{
-          game_name: g.name,
-          puzzle_name: p.name,
-          puzzle_date: p.date,
-          puzzle_data: p.data
+          name: g.name,
+          slug: g.slug,
+          title: p.name,
+          date: p.date,
+          data: p.data
         }
 
     case Games.Repo.one(query) do
@@ -29,16 +43,16 @@ defmodule GamesWeb.GameLive do
         {:ok, assign(socket, game: nil, error: "Game not found")}
 
       game ->
-        puzzle_data =
-          case game.puzzle_data do
+        data =
+          case game.data do
             nil -> nil
             json -> Jason.decode!(json)
           end
 
       game = game
-        |> Map.put(:puzzle_data, puzzle_data)
-        |> Map.put_new(:puzzle_name, "No puzzle available")
-        |> Map.put_new(:puzzle_date, nil)
+        |> Map.put(:data, data)
+        |> Map.put_new(:title, "No puzzle available")
+        |> Map.put_new(:date, nil)
         |> IO.inspect(label: "GAME")
 
         {:ok, assign(socket, game: game)}
