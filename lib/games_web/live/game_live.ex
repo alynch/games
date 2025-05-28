@@ -13,20 +13,38 @@ defmodule GamesWeb.GameLive do
     """
   end
 
-  def mount(params, _session, socket) do
-    id = params["id"]
-    date = params["date"]
+  def mount(%{"id" => id, "date" => date}, _session, socket) do
+    query =
+      from g in Game,
+        left_join: p in Puzzle, on: (g.id == p.game_id and p.date == ^date),
+        where: g.slug == ^id,
+        select: %{
+          game_name: g.name,
+          puzzle_name: p.name,
+          puzzle_date: p.date,
+          puzzle_data: p.data
+        }
 
-    game = from g in Game,
-      left_join: p in Puzzle, on: g.id == p.game_id,
-      where: g.slug == ^id and p.date == ^date,
-      select: %{game_name: g.name, puzzle_name: p.name, puzzle_date: p.date, puzzle_data: p.data}
+    case Games.Repo.one(query) do
+      nil ->
+        {:ok, assign(socket, game: nil, error: "Game not found")}
 
-    {:ok, game} = Games.Repo.one(game)
-    |> Map.get_and_update(:puzzle_data, &Jason.decode/1)
-    # |> IO.inspect()
+      game ->
+        puzzle_data =
+          case game.puzzle_data do
+            nil -> nil
+            json -> Jason.decode!(json)
+          end
 
-    {:ok, assign(socket, game: game)}
+        game = Map.put(game, :puzzle_data, puzzle_data)
+        |> IO.inspect(label: "GAME")
+        {:ok, assign(socket, game: game)}
+    end
+  end
+
+  def mount(params, session, socket) do
+    date = Date.utc_today() |> Date.to_iso8601()
+    mount(Map.put(params, "date", date), session, socket)
   end
 
   def handle_event("set_number", %{"number" => number}, socket) do
