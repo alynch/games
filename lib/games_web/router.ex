@@ -62,6 +62,18 @@ defmodule GamesWeb.Router do
     end
   end
 
+  ## Live Svelte routes
+
+  scope "/", GamesWeb do
+    pipe_through [:browser]
+
+    live_session :mount_current_user,
+      on_mount: [{GamesWeb.UserAuth, :mount_current_user}] do
+      live "/livegames/:id", GameLive, :view
+    end
+  end
+
+
   ## Authentication routes
 
   scope "/", GamesWeb do
@@ -85,7 +97,6 @@ defmodule GamesWeb.Router do
       on_mount: [{GamesWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-      live "/livegames/:id", GameLive, :view
     end
   end
 
