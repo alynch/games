@@ -11,9 +11,20 @@
     }
 </script>
 
-<h1>{ game.game_name }</h1>
+<h1 class="text-lg font-semibold text-zinc-800">Game: { game.game_name }</h1>
 
-<p>The number is {n}</p>
 
-<button class="px-4 border" onclick={increase}>+</button>
-<button class="px-4 border" onclick={decrease}>-</button>
+{#if game.puzzle_date}
+  <h1>Puzzle: { game.puzzle_name }</h1>
+  <h1>Date: { game.puzzle_date }</h1>
+
+
+  <p>The number is {n}</p>
+
+  <button class="px-4 border" onclick={increase}>+</button>
+  <button class="px-4 border" onclick={decrease}>-</button>
+
+{:else}
+	<p>No puzzle for this date</p>
+{/if}
+

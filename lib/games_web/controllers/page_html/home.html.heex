@@ -3,41 +3,41 @@
   <div class="flex w-full gap-4">
   <%= for game <- @games do %>
     <div class="px-6 py-4 text-sm font-semibold leading-6 border w-25 min-w-1200 rounded-2xl text-zinc-900">
-      <div class="flex items-centered">
-        <a href={~p"/games/#{game.slug}"} class="relative px-6 py-4 text-sm font-semibold leading-6 group rounded-2xl text-zinc-900 sm:py-6">
+      <div class="flex py-10 items-centered">
           <img src={~p"/images/logo-" <> game.slug <> ".svg"} width="36" />
           <%= game.name %>
-        </a>
       </div>
 
       <div class ="flex justify-center">
           <img src={~p"/images/" <> game.slug <> "-preview.png"} width="128"/>
       </div>
       
-      <hr class="mb-20"/>
+      <hr class="mb-10"/>
 
-        <a href={~p"/games/#{game.slug}"} class="relative px-6 py-4 text-sm font-semibold leading-6 group rounded-2xl text-zinc-900 sm:py-6">
+
+      <div class ="flex justify-center">
+        <a href={~p"/livegames/#{game.slug}"} class="relative px-6 py-4 text-sm font-semibold leading-6 group rounded-2xl text-zinc-900 sm:py-6">
           Daily&nbsp;Puzzle
         </a>
+      </div>
 
-      <hr class="mb-20"/>
-        <a href={~p"/games/#{game.slug}/archive"} class="relative px-6 py-4 text-sm font-semibold leading-6 group rounded-2xl text-zinc-900 sm:py-6">
+      <div class ="flex justify-center">
+        <a href={~p"/games/#{game.slug}/archive"} class="relative px-6 text-sm font-semibold leading-6 group rounded-2xl text-zinc-900 sm:py-6">
           Archive
         </a>
+      </div>
 
-      <hr class="mb-20"/>
+      <div class ="flex justify-center py-10">
         Leaderboards
+      </div>
         
-      <hr class="mb-20"/>
+      <div class ="flex justify-center py-10">
         Custom Puzzle
+      </div>
 
-
-      <hr class="mb-32">
-      <div class="flex items-centered">
-        <a href={~p"/livegames/#{game.slug}"} class="relative px-6 py-4 text-sm font-semibold leading-6 group rounded-2xl text-zinc-900 sm:py-6">
-          <%= game.name %>
-
-          (LiveSvelte)
+      <div class ="flex justify-center py-10">
+        <a href={~p"/games/#{game.slug}"} class="relative px-6 py-4 text-sm font-semibold leading-6 group rounded-2xl text-zinc-900 sm:py-6">
+          iframe version
         </a>
       </div>
 

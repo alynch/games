@@ -3,7 +3,6 @@ defmodule GamesWeb.GameLive do
   import Ecto.Query
   alias Phoenix.Component, as: Live
 
-  alias Games.Admin
   alias Games.Admin.Game
   alias Games.Admin.Puzzle
 
@@ -36,8 +35,12 @@ defmodule GamesWeb.GameLive do
             json -> Jason.decode!(json)
           end
 
-        game = Map.put(game, :puzzle_data, puzzle_data)
+      game = game
+        |> Map.put(:puzzle_data, puzzle_data)
+        |> Map.put_new(:puzzle_name, "No puzzle available")
+        |> Map.put_new(:puzzle_date, nil)
         |> IO.inspect(label: "GAME")
+
         {:ok, assign(socket, game: game)}
     end
   end
