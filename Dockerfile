@@ -21,8 +21,11 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git nodejs\
+RUN apt-get update -y && apt-get install -y build-essential git curl\
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+# install nodejs for build stage
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
 
 # prepare build dir
 WORKDIR /app
@@ -50,6 +53,13 @@ COPY priv priv
 COPY lib lib
 
 COPY assets assets
+
+# install all npm packages in assets directory
+WORKDIR /app/assets
+RUN npm install
+
+# change back to build dir
+WORKDIR /app
 
 # compile assets
 RUN mix assets.deploy
