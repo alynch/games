@@ -11,6 +11,7 @@ defmodule GamesWeb.GameLive do
       |> String.split("_")
       |> Enum.map(&String.capitalize/1)
       |> Enum.join()
+    component = assigns.game.slug <> "/" <> component
     ~H"""
       <div class="mb-4">
         <h1>{assigns.game.name}</h1>
