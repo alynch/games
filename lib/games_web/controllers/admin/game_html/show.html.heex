@@ -22,6 +22,17 @@
   <:col :let={puzzle} label="Name">{puzzle.name}</:col>
   <:col :let={puzzle} label="Date">{puzzle.date}</:col>
   <:col :let={puzzle} label="Data">{puzzle.data}</:col>
+
+  <:action :let={puzzle}>
+    <.link href={~p"/admin/games/#{@game.slug}/puzzles/#{puzzle.id}/edit"}>
+      Edit
+    </.link>
+  </:action>
+  <:action :let={puzzle}>
+    <.link href={~p"/admin/games/#{@game.slug}/puzzles/#{puzzle.id}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
 </.table>
 
   <:actions>

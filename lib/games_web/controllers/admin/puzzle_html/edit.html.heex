@@ -1,0 +1,8 @@
+<.header>
+  Edit Puzzle {@puzzle.id}
+  <:subtitle>Use this form to manage puzzle records in your database.</:subtitle>
+</.header>
+
+<.puzzle_form changeset={@changeset} action={~p"/admin/games/#{@puzzle.game_id}/puzzles/#{@puzzle}"} />
+
+<.back navigate={~p"/puzzles"}>Back to puzzles</.back>
