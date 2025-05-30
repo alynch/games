@@ -69,4 +69,9 @@ defmodule GamesWeb.GameLive do
     {:noreply, Live.update(socket, :game, fn game -> Map.put(game, :puzzle_data, %{"n" => number}) |> IO.inspect end)}
   end
 
+  def handle_event("save_score", %{"score" => score}, socket) do
+    {:noreply, Live.update(socket, :game, fn game -> Map.put(game, :puzzle_data, %{"score" => score}) |> IO.inspect end)}
+  end
+
+
 end

@@ -10,6 +10,13 @@
   let newWord = $state("");
   let gameOver = $derived(startChain.length && endChain.length && startChain.at(-1) === endChain.at(-1));
 
+  $effect(() => {
+    if (gameOver) {
+      const score = Math.round(solution?.length / (endChain.length + startChain.length - 1) * 100)
+      live.pushEvent("save_score", {score})
+    }
+  })
+
   onMount(async () => {
     wordList = await fetch('/typo/words.json').then(x => x.json());
     const neighbours = await fetch('/typo/computed.txt')
