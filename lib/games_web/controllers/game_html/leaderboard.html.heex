@@ -1,0 +1,7 @@
+<.header class="p-5">
+  Leaderboard for {@game.name}
+</.header>
+
+<.table id="user" rows={@users}>
+  <:col :let={user} label="Name">{user.name}</:col>
+</.table>
